@@ -1,1 +1,30 @@
+pipeline {
+   agent any
+stage {
+   stage('checkout') {
+steps {
+git branch: 'main', url: 'https://github.com/mohith200-ctrl/index.git'
+}
+}
+stage('Deploy') {
+steps {
+sh '''
+mkdir -p deployed_html
+cp *.html deployed_html/
+'''
+}
+}
 
+}
+post {
+success {
+publishHTML(target: [
+allowMissing: false,
+keepAll: true,
+reportDir: 'deployed_html',
+reportFiles: 'form.html',
+reportName: 'My Webpage'
+])
+}
+}
+}
