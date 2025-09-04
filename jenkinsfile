@@ -1,33 +1,35 @@
 pipeline {
-   agent any
-stage {
-   stage('checkout') {
-steps {
-git branch: 'main',
-    credentialsId: 'your-credential-id',
-    url: 'https://github.com/mohith200-ctrl/Devops_lab.git'
+    agent any
 
-}
-}
-stage('Deploy') {
-steps {
-sh '''
-mkdir -p deployed_html
-cp *.html deployed_html/
-'''
-}
-}
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    credentialsId: 'your-credential-id',
+                    url: 'https://github.com/mohith200-ctrl/Devops_lab.git'
+            }
+        }
 
-}
-post {
-success {
-publishHTML(target: [
-allowMissing: false,
-keepAll: true,
-reportDir: 'deployed_html',
-reportFiles: 'form.html',
-reportName: 'My Webpage'
-])
-}
-}
+        stage('Deploy') {
+            steps {
+                sh '''
+                    mkdir -p deployed_html
+                    cp *.html deployed_html/
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            publishHTML(target: [
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'deployed_html',
+                reportFiles: 'form.html',
+                reportName: 'My Webpage'
+            ])
+        }
+    }
 }
