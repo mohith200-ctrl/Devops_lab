@@ -5,7 +5,7 @@ stage {
 steps {
 git branch: 'main',
     credentialsId: 'your-credential-id',
-    url: 'https://github.com/mohith200-ctrl/index.git'
+    url: 'https://github.com/mohith200-ctrl/Devops_lab.git'
 
 }
 }
