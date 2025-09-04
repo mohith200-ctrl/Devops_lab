@@ -3,7 +3,10 @@ pipeline {
 stage {
    stage('checkout') {
 steps {
-git branch: 'main', url: 'https://github.com/mohith200-ctrl/index.git'
+git branch: 'main',
+    credentialsId: 'your-credential-id',
+    url: 'https://github.com/mohith200-ctrl/index.git'
+
 }
 }
 stage('Deploy') {
